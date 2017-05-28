@@ -57,22 +57,22 @@ function [result] =  avaliav (x, y, ax, bx, nx, ay, by, ny, coef_matrix)
 
 	hx = (bx - ax) / nx;
 	hy = (by - ay) / ny;
-	xi = 0;
-	yi = 0;
+	xa = 0;
+	yb = 0;
 	i = 0;
 	j = 0;
 
 	for a = 0:(nx -1)
-		xi = ax + (a * hx);
+		xa = ax + (a * hx);
 
 		%Achamos o intervalo [x(i), x(i+1)]
-		if ((x >= xi) && (x =< xi + hx))
+		if ((x >= xa) & (x =< (xa + hx)))
 			i = a;
 			for b = 0:(ny - 1)
-				yi = ay + (b * hy);
+				yb = ay + (b * hy);
 
 				%Achamos o intervalo [y(i), y(i+1)]
-				if((y >= yi) && (y =< yi + hy))
+				if((y >= yb) & (y =< yb + hy))
 					j = b;
 					break;
 				endif
@@ -85,8 +85,8 @@ function [result] =  avaliav (x, y, ax, bx, nx, ay, by, ny, coef_matrix)
 	% maiores que 0, e i,j podem ser iguais a 0
 	coef = coef_matrix(i+1, j+1);
 
-	X = [1 ((x - xi) / hx) power(((x - xi) / hx), 2) power(((x - xi) / hx), 3)];
-	Y = [1; ((y - yi) / hy); power(((y - yi) / hy), 2); power(((y - yi) / hy), 3)];
+	X = [1 ((x - xa) / hx) power(((x - xa) / hx), 2) power(((x - xa) / hx), 3)];
+	Y = [1; ((y - yb) / hy); power(((y - yb) / hy), 2); power(((y - yb) / hy), 3)];
 
 	result = X * coef * Y;
 endfunction
@@ -94,8 +94,10 @@ endfunction
 args = argv();
 interactive = false;
 if length(args) < 3
-	interactive = true;
 	filename = args(1,1);
+	if args(2,1) == '-i'
+		interactive = true;
+	endif
 	main(filename, interactive);
 else
 	filename = args(1, 1);
