@@ -62,17 +62,17 @@ function [result] =  avaliav (x, y, ax, bx, nx, ay, by, ny, coef_matrix)
 	i = 0;
 	j = 0;
 
-	for a = 0:(nx -1)
+	for a = 0:(nx-1)
 		xa = ax + (a * hx);
 
 		%Achamos o intervalo [x(i), x(i+1)]
-		if ((x >= xa) & (x =< (xa + hx)))
+		if ((x >= xa) && (x <= (xa + hx)))
 			i = a;
 			for b = 0:(ny - 1)
 				yb = ay + (b * hy);
 
 				%Achamos o intervalo [y(i), y(i+1)]
-				if((y >= yb) & (y =< yb + hy))
+				if((y >= yb) && (y <= yb + hy))
 					j = b;
 					break;
 				endif
@@ -83,7 +83,7 @@ function [result] =  avaliav (x, y, ax, bx, nx, ay, by, ny, coef_matrix)
 
 	% Temos que adicionar 1 em i e j pois vetores, em octave, são indexados por inteiros
 	% maiores que 0, e i,j podem ser iguais a 0
-	coef = coef_matrix(i+1, j+1);
+	coef = coef_matrix{i+1, j+1};
 
 	X = [1 ((x - xa) / hx) power(((x - xa) / hx), 2) power(((x - xa) / hx), 3)];
 	Y = [1; ((y - yb) / hy); power(((y - yb) / hy), 2); power(((y - yb) / hy), 3)];
@@ -94,14 +94,14 @@ endfunction
 args = argv();
 interactive = false;
 if length(args) < 3
-	filename = args(1,1);
-	if args(2,1) == '-i'
+	filename = args{1,1};
+	if args{2,1} == '-i'
 		interactive = true;
 	endif
 	main(filename, interactive);
 else
-	filename = args(1, 1);
-	x = args(2,1);
-	y = args(3,1);
+	filename = args{1, 1};
+	x = args{2,1};
+	y = args{3,1};
 	main(filename, interactive, x, y);
 endif
