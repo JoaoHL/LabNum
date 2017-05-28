@@ -1,3 +1,19 @@
+function [] = main (filename, interactive, x=null, y = null)
+	load filename;
+	coef_matrix = constroiv(ax, bx, nx, ay, by, ny, f, df_dx, df_dy, d2f_dxy);
+	if interactive
+		while true
+			x = input('\nDigite x: ');
+			y = input('\nDigite y: ');
+			result = avaliav(x, y, ax, bx, nx, ay, by, ny, coef_matrix);
+			printf('Resultado: %f\n', result);
+		endwhile
+	else
+		result = avaliav(x, y, ax, bx, nx, ay, by, ny, coef_matrix);
+		printf('Resultado: %f\n', result);
+	endif
+endfunction
+
 function [coef_matrix] = constroiv (ax, bx, nx, ay, by, ny, f, df_dx, df_dy, d2f_dxy)
 
 	hx = (bx - ax) / nx;
@@ -46,7 +62,7 @@ function [result] =  avaliav (x, y, ax, bx, nx, ay, by, ny, coef_matrix)
 	i = 0;
 	j = 0;
 
-	for a = 0:(nx - 1)
+	for a = 0:(nx -1)
 		xi = ax + (a * hx);
 
 		%Achamos o intervalo [x(i), x(i+1)]
@@ -74,3 +90,16 @@ function [result] =  avaliav (x, y, ax, bx, nx, ay, by, ny, coef_matrix)
 
 	result = X * coef * Y;
 endfunction
+
+args = argv();
+interactive = false;
+if length(args) < 3
+	interactive = true;
+	filename = args(1,1);
+	main(filename, interactive);
+else
+	filename = args(1, 1);
+	x = args(2,1);
+	y = args(3,1);
+	main(filename, interactive, x, y);
+endif
