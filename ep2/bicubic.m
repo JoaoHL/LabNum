@@ -1,5 +1,6 @@
-function [] = main (filename, interactive, x=null, y = null)
-	load filename;
+function [] = main (filename, interactive, x = 0, y = 0)
+	load(filename);
+
 	coef_matrix = constroiv(ax, bx, nx, ay, by, ny, f, df_dx, df_dy, d2f_dxy);
 	if interactive
 		while true
@@ -15,13 +16,13 @@ function [] = main (filename, interactive, x=null, y = null)
 endfunction
 
 function [coef_matrix] = constroiv (ax, bx, nx, ay, by, ny, f, df_dx, df_dy, d2f_dxy)
-
 	hx = (bx - ax) / nx;
 	hy = (by - ay) / ny;
 	coef_matrix = {};
 
 	for a = 1:nx
 		for b = 1:ny
+
 			a00 = f(a, b);
 			a01 = df_dy(a, b) * hy;
 			a10 = df_dx(a, b) * hx;
@@ -94,9 +95,9 @@ endfunction
 args = argv();
 interactive = false;
 if length(args) < 3
-	filename = args{1,1};
+	filename = args{1, 1};
 	if args{2,1} == '-i'
-		interactive = true;
+		interactive = true ;
 	endif
 	main(filename, interactive);
 else
