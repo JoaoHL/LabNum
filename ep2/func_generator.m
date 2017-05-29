@@ -20,19 +20,19 @@ function [] = generate_file (f_eval, df_dx_eval, df_dy_eval, d2f_dxy_eval, ax, b
 endfunction
 
 function [result] = f_eval (x, y)
-	result = exp(x*y);
+	result = sin(x * cos(y));
 endfunction
 
 function [result] = df_dx_eval (x, y)
-	result = y * exp(x*y);
+	result = cos(y) * cos(x * cos(y));
 endfunction
 
 function [result] = df_dy_eval (x, y)
-	result = x * exp(x*y);
+	result = (-x)*sin(y)*cos(x*cos(y));
 endfunction
 
 function [result] = d2f_dxy_eval (x, y)
-	result = x*y*exp(x*y) + exp(x*y);
+	result = sin(y)*(x*cos(y)*sin(x*cos(y)) - cos(x*cos(y)));
 endfunction
 
 args = argv();

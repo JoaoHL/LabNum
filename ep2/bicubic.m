@@ -4,8 +4,8 @@ function [] = main (filename, interactive, x = 0, y = 0)
 	coef_matrix = constroiv(ax, bx, nx, ay, by, ny, f, df_dx, df_dy, d2f_dxy);
 	if interactive
 		while true
-			x = input('\nDigite x: ');
-			y = input('\nDigite y: ');
+			x = input('Digite x: ');
+			y = input('Digite y: ');
 			result = avaliav(x, y, ax, bx, nx, ay, by, ny, coef_matrix);
 			printf('Resultado: %f\n', result);
 		endwhile
